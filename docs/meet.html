@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Instant Meeting (No Prompt)</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      background: #000;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: #fff;
+    }
+
+    #info { display: none; }
+
+    #meet {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* popup centered */
+    #share-popup {
+      position: fixed;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.85);
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 12px;
+      max-width: 90%;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.6);
+      z-index: 9999;
+      display: none;
+    }
+    #share-popup-title {
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    #share-main-row {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+    #share-link-input {
+      width: 240px;
+      max-width: 100%;
+      font-size: 11px;
+      padding: 4px;
+      border-radius: 4px;
+      border: 1px solid #333;
+      background: #111;
+      color: #fff;
+      outline: none;
+      box-sizing: border-box;
+      margin-right: 4px;
+    }
+    .popup-btn {
+      font-size: 11px;
+      padding: 4px 8px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      background: #1e90ff;
+      color: #fff;
+      white-space: nowrap;
+    }
+    .popup-btn:active {
+      transform: scale(0.97);
+    }
+
+    /* Expanded block niche wala */
+    #share-more {
+      display: none;            /* default band */
+      margin-top: 6px;
+      border-top: 1px solid #333;
+      padding-top: 6px;
+    }
+    #share-more-inner {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    #phone-input {
+      width: 140px;
+      max-width: 100%;
+      font-size: 11px;
+      padding: 4px;
+      border-radius: 4px;
+      border: 1px solid #333;
+      background: #111;
+      color: #fff;
+      outline: none;
+      box-sizing: border-box;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="info"></div>
+  <div id="meet"></div>
+
+  <!-- popup -->
+  <div id="share-popup">
+    <div id="share-popup-title">Share this link:</div>
+
+    <!-- main row: input + Copy + New Meet + down arrow -->
+    <div id="share-main-row">
+      <input id="share-link-input" type="text" readonly />
+
+      <!-- Copy button -->
+      <button id="copy-btn" class="popup-btn">Copy</button>
+
+      <!-- New Meet button -->
+      <button id="newmeet-btn" class="popup-btn">New Meet</button>
+
+      <!-- Down arrow button -->
+      <button id="expand-btn" class="popup-btn">▼</button>
+    </div>
+
+    <!-- expanded block niche -->
+    <div id="share-more">
+      <div id="share-more-inner">
+        <!-- Mobile number input -->
+        <input
+          id="phone-input"
+          type="tel"
+          placeholder="Mobile number"
+          maxlength="15"
+        />
+
+        <!-- Send SMS button -->
+        <button id="send-sms-btn" class="popup-btn">Send</button>
+
+        <!-- Up arrow button to collapse -->
+        <button id="collapse-btn" class="popup-btn">▲</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://meet.jit.si/external_api.js"></script>
+  <script>
+    (function () {
+      const url = new URL(window.location.href);
+      const params = url.searchParams;
+
+      let role = params.get("role") || "host";
+      const isHost = role !== "guest";
+
+      let room = params.get("room");
+
+      const sharePopup = document.getElementById("share-popup");
+      const shareLinkInput = document.getElementById("share-link-input");
+      const copyBtn = document.getElementById("copy-btn");
+      const newMeetBtn = document.getElementById("newmeet-btn");
+      const expandBtn = document.getElementById("expand-btn");
+      const shareMore = document.getElementById("share-more");
+      const collapseBtn = document.getElementById("collapse-btn");
+      const phoneInput = document.getElementById("phone-input");
+      const sendSmsBtn = document.getElementById("send-sms-btn");
+
+      // Host ke liye random room agar nahi diya
+      if (!room && isHost) {
+        room = "room-" + Math.random().toString(36).substring(2, 10);
+      }
+
+      // Guest ke liye room zaroori
+      if (!room && !isHost) return;
+
+      const guestLink =
+        window.location.origin +
+        window.location.pathname +
+        "?room=" + encodeURIComponent(room) +
+        "&role=guest";
+
+      if (isHost) {
+        shareLinkInput.value = guestLink;
+        sharePopup.style.display = "block";
+      }
+
+      // Copy button
+      copyBtn.addEventListener("click", () => {
+        const text = shareLinkInput.value;
+        if (!text) return;
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(() => {
+            const old = copyBtn.innerText;
+            copyBtn.innerText = "Copied!";
+            setTimeout(() => (copyBtn.innerText = old), 1200);
+          }).catch(fallbackCopy);
+        } else {
+          fallbackCopy();
+        }
+
+        function fallbackCopy() {
+          shareLinkInput.select();
+          shareLinkInput.setSelectionRange(0, 99999);
+          document.execCommand("copy");
+          const old = copyBtn.innerText;
+          copyBtn.innerText = "Copied!";
+          setTimeout(() => (copyBtn.innerText = old), 1200);
+        }
+      });
+
+      // NEW MEET BUTTON CLICK
+      newMeetBtn.addEventListener("click", () => {
+        window.location.href =
+          window.location.origin +
+          window.location.pathname +
+          "?room=new-" +
+          Math.random().toString(36).substring(2, 10) +
+          "&role=host";
+      });
+
+      // ▼ Expand button -> niche block show
+      expandBtn.addEventListener("click", () => {
+        shareMore.style.display = "block";
+      });
+
+      // ▲ Collapse button -> niche block hide
+      collapseBtn.addEventListener("click", () => {
+        shareMore.style.display = "none";
+      });
+
+      // 📲 Send SMS button logic
+      sendSmsBtn.addEventListener("click", async () => {
+        const phone = phoneInput.value.trim();
+        const link = shareLinkInput.value.trim();
+
+        if (!phone) {
+          alert("Please enter mobile number.");
+          return;
+        }
+        if (!link) {
+          alert("Invite link not ready.");
+          return;
+        }
+
+        // simple basic validation (optional)
+        // yaha custom logic laga sakte ho jaise 10-digit etc.
+        // for example:
+        // if (!/^\d{10}$/.test(phone)) { ... }
+
+        const message = `Join my meeting: ${link}`;
+
+        // Button state change for UX
+        const oldText = sendSmsBtn.innerText;
+        sendSmsBtn.innerText = "Sending...";
+        sendSmsBtn.disabled = true;
+
+        try {
+          // 👉 BACKEND API CALL (tumhe implement karna hoga)
+          const res = await fetch("/send-sms", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              phone: phone,
+              message: message
+            })
+          });
+
+          if (res.ok) {
+            sendSmsBtn.innerText = "Sent!";
+            setTimeout(() => {
+              sendSmsBtn.innerText = oldText;
+              sendSmsBtn.disabled = false;
+            }, 1500);
+          } else {
+            sendSmsBtn.innerText = oldText;
+            sendSmsBtn.disabled = false;
+            alert("SMS send failed (server error).");
+          }
+        } catch (err) {
+          console.error(err);
+          sendSmsBtn.innerText = oldText;
+          sendSmsBtn.disabled = false;
+          alert("SMS send failed (network error).");
+        }
+      });
+
+      const domain = "meet.jit.si";
+
+      const options = {
+        roomName: room,
+        parentNode: document.getElementById("meet"),
+        userInfo: {
+          displayName: isHost ? "Host" : "Guest"
+        },
+        configOverwrite: {
+          prejoinPageEnabled: false,
+          disableDeepLinking: true,
+          mobileAppPromo: false,
+          startWithAudioMuted: false,
+          startWithVideoMuted: !isHost,
+
+          constraints: isHost
+            ? { video: { facingMode: "environment" } }
+            : {},
+
+          deeplinking: {
+            disabled: true,
+            skipNativePrompt: true,
+          },
+
+          // Hangup click ko API pe expose karein
+          buttonsWithNotifyClick: [
+            {
+              key: 'hangup',
+              preventExecution: false
+            }
+          ]
+        },
+        interfaceConfigOverwrite: {
+          PREJOIN_PAGE_ENABLED: false,
+          MOBILE_APP_PROMO: false,
+          SHOW_JITSI_WATERMARK: false,
+          SHOW_BRAND_WATERMARK: false,
+          SHOW_POWERED_BY: false,
+        }
+      };
+
+      try {
+        const api = new JitsiMeetExternalAPI(domain, options);
+
+        // ✅ Sirf hangup dabane ke baad wale close pe hi redirect karna
+        let shouldRedirectOnClose = false;
+
+        api.addListener("toolbarButtonClicked", (event) => {
+          if (event.key === "hangup") {
+            shouldRedirectOnClose = true;
+          }
+        });
+
+        function handleCallEnd() {
+          if (!shouldRedirectOnClose) {
+            // e.g. login flow / internal close / error → redirect mat karo
+            return;
+          }
+
+          if (isHost) {
+            // Host -> abc.com
+            window.location.href = "https://abc.com";
+          } else {
+            // Guest -> xyz.com";
+            window.location.href = "https://xyz.com";
+          }
+        }
+
+        api.addListener("readyToClose", handleCallEnd);
+        api.addListener("videoConferenceLeft", handleCallEnd);
+
+      } catch (e) {
+        console.error(e);
+      }
+    })();
+  </script>
+</body>
+</html>
