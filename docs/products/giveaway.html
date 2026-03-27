@@ -578,9 +578,10 @@ function getNextQuarterTime(now) {
 
   let minutes = now.getMinutes();
 
-  // find next multiple of 15
-  let nextQuarter = Math.floor(minutes / 15) * 15 + 15;
 
+  // find next multiple of 30
+let nextQuarter = Math.floor(minutes / 30) * 30 + 30;
+	
   if (nextQuarter >= 60) {
     next.setHours(now.getHours() + 1);
     next.setMinutes(0);
