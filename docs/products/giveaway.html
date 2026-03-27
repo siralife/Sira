@@ -27,6 +27,71 @@
 <script type="text/javascript">window.__WEBFLOW_CURRENCY_SETTINGS = {"currencyCode":"USD","symbol":"$","decimal":".","fractionDigits":2,"group":",","template":"{{wf {\"path\":\"symbol\",\"type\":\"PlainText\"} }} {{wf {\"path\":\"amount\",\"type\":\"CommercePrice\"} }} {{wf {\"path\":\"currencyCode\",\"type\":\"PlainText\"} }}","hideDecimalForWholeNumbers":false};</script>
 </head>
 <body>
+
+
+
+<!-- Confetti Styles -->
+<style>
+.confetti {
+  position: fixed;
+  width: 8px;
+  height: 14px;
+  top: -20px;
+  opacity: 0.9;
+  pointer-events: none;
+  z-index: 9999;
+  animation: fall linear forwards;
+}
+
+/* Animation */
+@keyframes fall {
+  to {
+    transform: translateY(110vh) rotate(720deg);
+  }
+}
+</style>
+
+<!-- Confetti Script -->
+<script>
+function createConfetti(side) {
+  for (let i = 0; i < 50; i++) {
+    let confetti = document.createElement("div");
+    confetti.classList.add("confetti");
+
+    // LEFT SIDE
+    if (side === "left") {
+      confetti.style.left = Math.random() * 40 + "vw";
+    } 
+    // RIGHT SIDE
+    else {
+      confetti.style.left = (60 + Math.random() * 40) + "vw";
+    }
+
+    confetti.style.animationDuration = (2 + Math.random() * 2) + "s";
+    confetti.style.backgroundColor = randomColor();
+
+    document.body.appendChild(confetti);
+
+    // remove after animation
+    setTimeout(() => {
+      confetti.remove();
+    }, 4000);
+  }
+}
+
+function randomColor() {
+  const colors = ["#ff4d4d", "#ffd700", "#00ffcc", "#ff66ff", "#ffffff"];
+  return colors[Math.floor(Math.random() * colors.length)];
+}
+
+// PAGE LOAD BLAST
+window.addEventListener("load", () => {
+  createConfetti("left");
+  createConfetti("right");
+});
+</script>
+
+  
 <nav class="navbar">
 <a href="../index.html" class="logo-link w-inline-block">
 <img loading="lazy" src="imgs/hlogo.png" alt="Zenkai" class="logo-image"/>
