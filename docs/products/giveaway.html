@@ -403,7 +403,163 @@
 <div class="product-main-details-container">
 
 <section class="product-main-details">
+<style>
 
+  .timer-container {
+    text-align: center;
+  }
+
+  .title {
+    font-size: 20px;
+    margin-bottom: 12px;
+  }
+
+  .flip-timer {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+  }
+
+  .flip-card {
+    position: relative;
+    width: 70px;
+    height: 90px;
+    perspective: 200px;
+  }
+
+  .card {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    background: #222;
+    color: #fff;
+    font-size: 36px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backface-visibility: hidden;
+  }
+
+  .top {
+    transform-origin: bottom;
+  }
+
+  .bottom {
+    transform: rotateX(180deg);
+    transform-origin: top;
+  }
+
+  .flip {
+    animation: flip 0.7s ease-in-out;
+  }
+
+  @keyframes flip {
+    0% { transform: rotateX(0deg); }
+    100% { transform: rotateX(-180deg); }
+  }
+
+  .label {
+    margin-top: 5px;
+    font-size: 12px;
+    text-align: center;
+  }
+
+  .unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  @media (max-width: 600px) {
+    .flip-card {
+      width: 50px;
+      height: 70px;
+    }
+    .card {
+      font-size: 24px;
+    }
+  }
+</style>
+
+<h5 style="text-align: center;">Offer Ends In</h5>
+<div class="timer-container">
+  <div class="flip-timer">
+    <div class="unit">
+      <div class="flip-card"><div class="card" id="hours">00</div></div>
+      <div class="label">HRS</div>
+    </div>
+    <div class="unit">
+      <div class="flip-card"><div class="card" id="minutes">00</div></div>
+      <div class="label">MIN</div>
+    </div>
+    <div class="unit">
+      <div class="flip-card"><div class="card" id="seconds">00</div></div>
+      <div class="label">SEC</div>
+    </div>
+  </div>
+</div>
+
+<script>
+let prev = {h: null, m: null, s: null};
+
+function getNextQuarterTime(now) {
+  const next = new Date(now);
+
+  // reset seconds
+  next.setSeconds(0);
+  next.setMilliseconds(0);
+
+  let minutes = now.getMinutes();
+
+  // find next multiple of 15
+  let nextQuarter = Math.floor(minutes / 15) * 15 + 15;
+
+  if (nextQuarter >= 60) {
+    next.setHours(now.getHours() + 1);
+    next.setMinutes(0);
+  } else {
+    next.setMinutes(nextQuarter);
+  }
+
+  return next;
+}
+
+function updateCountdown() {
+  const now = new Date();
+  const end = getNextQuarterTime(now);
+
+  let diff = end - now;
+
+  if (diff < 0) diff = 0;
+
+  const h = String(Math.floor(diff / (1000 * 60 * 60))).padStart(2,'0');
+  const m = String(Math.floor((diff / (1000 * 60)) % 60)).padStart(2,'0');
+  const s = String(Math.floor((diff / 1000) % 60)).padStart(2,'0');
+
+  updateFlip("hours", h, prev.h);
+  updateFlip("minutes", m, prev.m);
+  updateFlip("seconds", s, prev.s);
+
+  prev = {h, m, s};
+}
+
+function updateFlip(id, newVal, oldVal) {
+  const el = document.getElementById(id);
+
+  if (newVal !== oldVal) {
+    el.classList.remove("flip");
+    void el.offsetWidth; // restart animation
+    el.classList.add("flip");
+    el.innerText = newVal;
+  }
+}
+
+setInterval(updateCountdown, 1000);
+updateCountdown();
+</script>
+	<!--
 <style>
 
   .timer-container {
@@ -485,8 +641,7 @@
 </style>
 
 <div class="timer-container">
-  <!--<div class="title">⏳ Giveaway Ends In</div>-->
-
+  
   <div class="flip-timer">
     <div class="unit">
       <div class="flip-card"><div class="card" id="hours">00</div></div>
@@ -540,7 +695,7 @@ setInterval(updateCountdown, 1000);
 updateCountdown();
 </script>
 <p class="section-paragraph" style="text-align: center;">Only For Today's First 50 Customers</p>
-
+-->
 
 <h1 class="product-name-heading">Pack of 4<span style="font-size:16px;"> 50 ml/Bottle</span></h1>
 <div class="product-price-and-rating-container">
