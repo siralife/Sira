@@ -349,9 +349,8 @@ window.addEventListener("load", () => {
 }" data-wf-page-link-href-prefix="" class="w-commerce-commercecartwrapper" data-node-type="commerce-cart-wrapper">
 
 <a class="w-commerce-commercecartopenlink ecommerce-button nav-cart-button w-inline-block" role="button" aria-haspopup="dialog" aria-label="Open cart" data-node-type="commerce-cart-open-link" href="#">
-<!--
 <img src="6961f9a1d21856f6718a4c44/6964635fbc78ca8d24da2e98_Cart Icon.svg" loading="lazy" alt="Cart" class="ecommerce-button-icon"/>
--->
+<div data-wf-bindings="%5B%7B%22innerHTML%22%3A%7B%22type%22%3A%22Number%22%2C%22filter%22%3A%7B%22type%22%3A%22numberPrecision%22%2C%22params%22%3A%5B%220%22%2C%22numberPrecision%22%5D%7D%2C%22dataPath%22%3A%22database.commerceOrder.userItemsCount%22%7D%7D%5D" class="w-commerce-commercecartopenlinkcount cart-quantity-number">0</div>
 
 </a>
 
@@ -851,26 +850,9 @@ updateCountdown();
 </div>
 -->
 </div>
-<!--
 <a href="https://u.payu.in/PIRRLfPJoNUV" aria-label="Next Page" class="w-commerce-commerceaddtocartbutton button product-action"><div class="w-inline-block">Buy Now</div></a>
-<br>	
--->
 
- <div class="w-commerce-commerceaddtocartbutton button product-action">Buy Now</div>
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    
-    const buyNowBtn = document.querySelector(".product-action");
-    const cartBtn = document.querySelector(".w-commerce-commercecartopenlink");
 
-    if (buyNowBtn && cartBtn) {
-      buyNowBtn.addEventListener("click", function () {
-        cartBtn.click(); // cart popup open
-      });
-    }
-
-  });
-</script>
 <br>
 <div class="coupon-box">
   <span class="coupon-text">
