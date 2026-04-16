@@ -972,13 +972,33 @@ function niraPay() {
 }
 </script>
 
-<!-- =============================================
-     APNE BUY NOW BUTTON KO YEH BANAO:
-     
-     <a href="#" onclick="niraOpen(); return false;" class="w-commerce-commerceaddtocartbutton button product-action">
-       <div class="w-inline-block">Buy Now</div>
-     </a>
-     ============================================= -->
+<script>
+function niraOpen() {
+  var overlay = document.getElementById('niraOverlay');
+  var popup = document.getElementById('niraPopup');
+
+  // push state for back button
+  history.pushState({ niraPopup: true }, "");
+
+  overlay.style.display = 'flex';
+  requestAnimationFrame(function() {
+    requestAnimationFrame(function() {
+      popup.style.transform = 'translateY(0)';
+    });
+  });
+
+  document.body.style.overflow = 'hidden';
+}
+
+// back button handle
+window.addEventListener("popstate", function (event) {
+  var overlay = document.getElementById('niraOverlay');
+
+  if (overlay.style.display === 'flex') {
+    niraClose();
+  }
+});
+</script>
 
 <br>
 <div class="coupon-box">
