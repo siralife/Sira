@@ -808,8 +808,197 @@ updateCountdown();
 </div>
 -->
 </div>
+<!--
 <a href="giveawayform.html" aria-label="Next Page" class="w-commerce-commerceaddtocartbutton button product-action"><div class="w-inline-block">Buy Now</div></a>
+-->
+<a href="#" onclick="niraOpen(); return false;" 
+   class="w-commerce-commerceaddtocartbutton button product-action">
+  <div class="w-inline-block">Buy Now</div>
+</a>
+<!-- =============================================
+     NIRA CHECKOUT POPUP — PASTE BEFORE </body>
+     ============================================= -->
 
+<!-- POPUP HTML -->
+<div id="niraOverlay" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:99999;align-items:flex-end;justify-content:center;">
+  <div id="niraPopup" style="background:#fff;width:100%;max-width:480px;border-radius:16px 16px 0 0;overflow:hidden;display:flex;flex-direction:column;max-height:95vh;transform:translateY(100%);transition:transform 0.35s cubic-bezier(0.32,0.72,0,1);">
+
+    <!-- Header -->
+    <div style="background:#fff;border-bottom:1px solid #efefef;padding:14px 16px;display:flex;align-items:center;gap:12px;flex-shrink:0;">
+      <button onclick="niraClose()" style="width:36px;height:36px;border:none;background:#f2f2f2;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <div style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px;">
+         <span style="font-size:15px;font-weight:600;color:#111;">Unisex Combo</span>
+      </div>
+       </div>
+
+    <!-- Total Bar -->
+    <div style="background:#f9f9f9;padding:10px 16px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #efefef;flex-shrink:0;">
+      <span style="font-size:13px;color:#888;">Delivery Fee</span>
+      <span style="font-size:14px;font-weight:600;color:#111;">₹110</span>
+    </div>
+
+    <!-- Form Body -->
+    <div style="flex:1;overflow-y:auto;padding:16px;">
+
+      <p style="font-size:12px;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:0.6px;margin-bottom:12px;">Delivery Details</p>
+
+      <!-- Phone -->
+      <div style="margin-bottom:12px;">
+        <label style="display:block;font-size:12px;color:#666;margin-bottom:5px;font-weight:500;">Phone Number</label>
+        <div style="display:flex;">
+          <span style="background:#f5f5f5;border:1px solid #e0e0e0;border-right:none;border-radius:7px 0 0 7px;padding:10px 12px;font-size:14px;color:#666;white-space:nowrap;">+91</span>
+          <input type="tel" id="niraPhone" maxlength="10" placeholder="Enter mobile number" oninput="niraValidate()" style="width:100%;border:1px solid #e0e0e0;border-radius:0 7px 7px 0;padding:10px 12px;font-size:14px;color:#111;outline:none;"/>
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div style="margin-bottom:12px;">
+        <label style="display:block;font-size:12px;color:#666;margin-bottom:5px;font-weight:500;">Email Address</label>
+        <input type="email" id="niraEmail" placeholder="you@example.com" oninput="niraValidate()" style="width:100%;border:1px solid #e0e0e0;border-radius:7px;padding:10px 12px;font-size:14px;color:#111;outline:none;box-sizing:border-box;"/>
+      </div>
+
+      <!-- Name -->
+      <div style="margin-bottom:12px;">
+        <label style="display:block;font-size:12px;color:#666;margin-bottom:5px;font-weight:500;">Full Name</label>
+        <input type="text" id="niraName" placeholder="As on shipping label" oninput="niraValidate()" style="width:100%;border:1px solid #e0e0e0;border-radius:7px;padding:10px 12px;font-size:14px;color:#111;outline:none;box-sizing:border-box;"/>
+      </div>
+
+      <div style="height:1px;background:#f0f0f0;margin:4px 0 16px;"></div>
+      <p style="font-size:12px;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:0.6px;margin-bottom:12px;">Shipping Address</p>
+
+      <!-- Address Line 1 -->
+      <div style="margin-bottom:12px;">
+        <label style="display:block;font-size:12px;color:#666;margin-bottom:5px;font-weight:500;">Address Line 1</label>
+        <input type="text" id="niraAddr1" placeholder="House / Flat / Building no." oninput="niraValidate()" style="width:100%;border:1px solid #e0e0e0;border-radius:7px;padding:10px 12px;font-size:14px;color:#111;outline:none;box-sizing:border-box;"/>
+      </div>
+
+      <!-- Address Line 2 -->
+      <div style="margin-bottom:12px;">
+        <label style="display:block;font-size:12px;color:#666;margin-bottom:5px;font-weight:500;">Address Line 2</label>
+        <input type="text" id="niraAddr2" placeholder="Street, Area, Landmark" oninput="niraValidate()" style="width:100%;border:1px solid #e0e0e0;border-radius:7px;padding:10px 12px;font-size:14px;color:#111;outline:none;box-sizing:border-box;"/>
+      </div>
+
+      <!-- Pincode -->
+      <div style="margin-bottom:12px;">
+        <label style="display:block;font-size:12px;color:#666;margin-bottom:5px;font-weight:500;">Pincode</label>
+        <input type="text" id="niraPin" maxlength="6" placeholder="6-digit pincode" oninput="niraValidate()" style="width:100%;border:1px solid #e0e0e0;border-radius:7px;padding:10px 12px;font-size:14px;color:#111;outline:none;box-sizing:border-box;"/>
+      </div>
+
+    </div>
+
+    <!-- Footer -->
+    <div style="padding:14px 16px;background:#fff;border-top:1px solid #efefef;flex-shrink:0;">
+      <button id="niraPayBtn" disabled onclick="niraPay()" style="width:100%;background:#ccc;color:#fff;border:none;padding:14px;border-radius:8px;font-size:15px;font-weight:600;cursor:not-allowed;transition:background 0.2s;letter-spacing:0.2px;">
+        Pay Now
+      </button>
+      <div style="display:flex;justify-content:center;align-items:center;gap:16px;margin-top:10px;flex-wrap:wrap;">
+        <span style="display:flex;align-items:center;gap:4px;font-size:10px;color:#aaa;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          100% Secure
+        </span>
+        <span style="display:flex;align-items:center;gap:4px;font-size:10px;color:#aaa;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          Verified Seller
+        </span>
+        <span style="display:flex;align-items:center;gap:4px;font-size:10px;color:#aaa;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          Fast Delivery
+        </span>
+      </div>
+      <div style="display:flex;justify-content:center;gap:8px;margin-top:10px;align-items:center;">
+<img src="imgs/paystrip.png" width="70%" height="auto">
+      </div>
+      <div style="font-size:10px;color:#aaa;text-align:center;margin-top:8px;line-height:1.4;">By proceeding, you agree to our <a href="../tnc.html">Terms</a> &amp; <a href="../pp.html">Privacy Policy.</a></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- JAVASCRIPT -->
+<script>
+function niraOpen() {
+  var overlay = document.getElementById('niraOverlay');
+  var popup = document.getElementById('niraPopup');
+  overlay.style.display = 'flex';
+  requestAnimationFrame(function() {
+    requestAnimationFrame(function() {
+      popup.style.transform = 'translateY(0)';
+    });
+  });
+  document.body.style.overflow = 'hidden';
+}
+
+function niraClose() {
+  var popup = document.getElementById('niraPopup');
+  var overlay = document.getElementById('niraOverlay');
+  popup.style.transform = 'translateY(100%)';
+  setTimeout(function() {
+    overlay.style.display = 'none';
+    document.body.style.overflow = '';
+  }, 350);
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') niraClose();
+});
+
+document.getElementById('niraOverlay').addEventListener('click', function(e) {
+  if (e.target === this) niraClose();
+});
+
+function niraValidate() {
+  var phone = document.getElementById('niraPhone').value.trim();
+  var email = document.getElementById('niraEmail').value.trim();
+  var name  = document.getElementById('niraName').value.trim();
+  var addr1 = document.getElementById('niraAddr1').value.trim();
+  var addr2 = document.getElementById('niraAddr2').value.trim();
+  var pin   = document.getElementById('niraPin').value.trim();
+
+  var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  var phoneOk = phone.length === 10 && /^\d+$/.test(phone);
+  var pinOk   = pin.length === 6 && /^\d+$/.test(pin);
+  var allOk   = phoneOk && emailOk && name && addr1 && addr2 && pinOk;
+
+  var btn = document.getElementById('niraPayBtn');
+  btn.disabled = !allOk;
+  btn.style.background = allOk ? '#000' : '#ccc';
+  btn.style.cursor = allOk ? 'pointer' : 'not-allowed';
+}
+
+function niraPay() {
+  window.location.href = 'https://nirapay.kesug.com/sira/giveaway.php';
+}
+</script>
+
+<script>
+function niraOpen() {
+  var overlay = document.getElementById('niraOverlay');
+  var popup = document.getElementById('niraPopup');
+
+  // push state for back button
+  history.pushState({ niraPopup: true }, "");
+
+  overlay.style.display = 'flex';
+  requestAnimationFrame(function() {
+    requestAnimationFrame(function() {
+      popup.style.transform = 'translateY(0)';
+    });
+  });
+
+  document.body.style.overflow = 'hidden';
+}
+
+// back button handle
+window.addEventListener("popstate", function (event) {
+  var overlay = document.getElementById('niraOverlay');
+
+  if (overlay.style.display === 'flex') {
+    niraClose();
+  }
+});
+</script>
 
 <br>
 <div class="coupon-box">
