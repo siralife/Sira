@@ -217,11 +217,9 @@
 
 <style>
 .timer{
-    position:fixed;
-    
-    right:20px;
-
-    display:flex;
+/*   position:fixed;*/
+     right:20px;
+   display:flex;
     align-items:center;
     gap:12px;
     font-size:42px;
@@ -235,12 +233,12 @@
 </style>
 
 <div class="timer">
-    <span class="icon">⏱️</span>
-    <span id="countdown">15:00</span>
+   &nbsp;&nbsp;&nbsp;&nbsp; <span class="icon">⏱️</span>
+    <span id="countdown">7:00</span>
 </div>
 
 <script>
-let timeLeft = 15 * 60; // 15 minutes
+let timeLeft = 7 * 60; // 15 minutes
 
 const timer = document.getElementById("countdown");
 
@@ -277,7 +275,12 @@ const countdown = setInterval(() => {
        <div class="label">Amount payable</div>
         <div class="value">₹150</div>
         <!--<b>Sira Lifestyle</b>-->
-        Order #SL10482
+        <span id="orderId"></span>
+
+<script>
+document.getElementById("orderId").textContent =
+  "Order ID #SL" + Math.floor(10000 + Math.random() * 90000);
+</script>
       </div>
     </div>
 
@@ -415,6 +418,167 @@ const countdown = setInterval(() => {
   form.addEventListener('submit', function(e){
     e.preventDefault();
   });
+</script>
+    <!-- Payment Status Popup -->
+<div id="paymentPopupOverlay" class="payment-popup-overlay">
+  <div class="payment-popup">
+    <div class="payment-popup-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="4" y="10" width="16" height="10" rx="2"></rect>
+        <path d="M7 10V7a5 5 0 0 1 10 0v3"></path>
+      </svg>
+    </div>
+    <h3 class="payment-popup-title">Payment Processing</h3>
+    <p class="payment-popup-text">Your payment status is being checked.</p>
+      <div class="loader"></div>
+
+<style>
+.loader {
+  width: 32px;
+  height: 32px;
+  border: 4px solid #e2e5eb;
+  border-top: 4px solid #0f1f3d;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 20px auto;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+</style>
+    <div class="payment-popup-timer" id="paymentTimer" style="display:none;">03:00</div>
+    <button class="payment-popup-close" id="paymentPopupClose">Close</button>
+  </div>
+</div>
+
+<style>
+.payment-popup-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+.payment-popup-overlay.active {
+  display: flex;
+}
+.payment-popup {
+  background: #fff;
+  border-radius: 14px;
+  padding: 28px 24px;
+  max-width: 340px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+  animation: popupIn 0.25s ease;
+}
+@keyframes popupIn {
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: scale(1); }
+}
+.payment-popup-icon svg {
+  width: 44px;
+  height: 44px;
+  color: #16a34a;
+  margin-bottom: 12px;
+}
+.payment-popup-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 8px;
+  color: #111;
+}
+.payment-popup-text {
+  font-size: 14px;
+  color: #555;
+  margin: 0 0 18px;
+}
+.payment-popup-timer {
+  font-size: 26px;
+  font-weight: 700;
+  color: #111;
+  letter-spacing: 1px;
+  margin-bottom: 20px;
+}
+.payment-popup-close {
+  background: #111;
+  color: #fff;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+}
+@media (max-width: 400px) {
+  .payment-popup { padding: 22px 18px; }
+}
+</style>
+
+<script>
+(function () {
+  const payBtn = document.getElementById('payBtn');
+  const overlay = document.getElementById('paymentPopupOverlay');
+  const closeBtn = document.getElementById('paymentPopupClose');
+  const timerEl = document.getElementById('paymentTimer');
+
+  let countdownInterval = null;
+
+  function openPopup() {
+    let timeLeft = 1 * 60; // 3 minutes in seconds
+    overlay.classList.add('active');
+    updateTimerDisplay(timeLeft);
+
+    countdownInterval = setInterval(() => {
+      timeLeft--;
+      updateTimerDisplay(timeLeft);
+
+      if (timeLeft <= 0) {
+        clearInterval(countdownInterval);
+        window.location.href = 'https://www.sira.lifestyle/failed.html';
+      }
+    }, 1000);
+  }
+
+  function updateTimerDisplay(seconds) {
+    const m = String(Math.floor(seconds / 60)).padStart(2, '0');
+    const s = String(seconds % 60).padStart(2, '0');
+    timerEl.textContent = `${m}:${s}`;
+  }
+
+    /*
+  function closePopup() {
+    overlay.classList.remove('active');
+    clearInterval(countdownInterval);
+  }
+*/
+        function closePopup() {
+  overlay.classList.remove('active');
+  clearInterval(countdownInterval);
+  window.location.href = 'https://www.sira.lifestyle/failed.html';
+}
+    
+ payBtn.addEventListener('click', function (e) {
+  e.preventDefault();
+
+  // agar form valid nahi hai (button abhi disabled state mein hai) to kuch mat karo
+  if (!payBtn.classList.contains('active')) return;
+
+  // UPI app open karo
+  window.location.href = payBtn.getAttribute('href');
+
+// status popup 5 second baad open karo
+  setTimeout(() => {
+    openPopup();
+  }, 5000);
+});
+
+  closeBtn.addEventListener('click', closePopup);
+})();
+
 </script>
 </body>
 </html>
