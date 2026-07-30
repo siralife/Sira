@@ -288,152 +288,6 @@
 </div>
 </div>
 <br>
-<style>
-
-
-.timer{
-    display:flex;
-    gap:12px;
-justify-content:center;
-    align-items:center;
-}
-
-.flip-box{
-    text-align:center;
-}
-
-.flip{
-    width:80px;
-    height:90px;
-    background:#111;
-    color:#fff;
-    border-radius:12px;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-size:42px;
-    font-weight:700;
-    position:relative;
-    overflow:hidden;
-    box-shadow:0 8px 18px rgba(0,0,0,.2);
-}
-
-.flip::after{
-    content:"";
-    position:absolute;
-    top:50%;
-    left:0;
-    width:100%;
-    height:1px;
-    background:rgba(255,255,255,.15);
-}
-
-.label{
-    margin-top:8px;
-    font-size:12px;
-    letter-spacing:2px;
-    color:#666;
-}
-
-.flip.animate{
-    animation:flip .4s ease;
-}
-
-@keyframes flip{
-    0%{
-        transform:rotateX(0deg);
-    }
-    50%{
-        transform:rotateX(90deg);
-    }
-    100%{
-        transform:rotateX(0deg);
-    }
-}
-
-@media(max-width:600px){
-
-.flip{
-    width:60px;
-    height:70px;
-    font-size:30px;
-}
-
-.timer{
-    gap:8px;
-}
-
-}
-</style>
-
-<div class="timer">
-
-    <div class="flip-box">
-        <div class="flip" id="hours">00</div>
-        <div class="label">Hr</div>
-    </div>
-
-    <div class="flip-box">
-        <div class="flip" id="minutes">00</div>
-        <div class="label">Min</div>
-    </div>
-
-    <div class="flip-box">
-        <div class="flip" id="seconds">00</div>
-        <div class="label">Sec</div>
-    </div>
-
-</div>
-
-<script>
-
-const h=document.getElementById("hours");
-const m=document.getElementById("minutes");
-const s=document.getElementById("seconds");
-
-let prev={
-    h:"",
-    m:"",
-    s:""
-};
-
-function flip(el,val,key){
-    if(prev[key]!==val){
-        el.classList.remove("animate");
-        void el.offsetWidth;
-        el.classList.add("animate");
-        el.textContent=val;
-        prev[key]=val;
-    }
-}
-
-function updateTimer(){
-
-    const now=new Date();
-
-    const midnight=new Date(
-        now.getFullYear(),
-        now.getMonth(),
-        now.getDate()+1,
-        0,0,0
-    );
-
-    const diff=midnight-now;
-
-    const hrs=Math.floor(diff/(1000*60*60));
-    const mins=Math.floor((diff%(1000*60*60))/(1000*60));
-    const secs=Math.floor((diff%(1000*60))/1000);
-
-    flip(h,String(hrs).padStart(2,"0"),"h");
-    flip(m,String(mins).padStart(2,"0"),"m");
-    flip(s,String(secs).padStart(2,"0"),"s");
-
-}
-
-updateTimer();
-setInterval(updateTimer,1000);
-
-</script>
 
 <section class="section is-small">
 <div class="container">
@@ -677,13 +531,182 @@ lightbox.addEventListener("click", (e) => {
 
 <div class="box has-16-gap">
 <div>
-<center>
-<a href="https://nirapay.kesug.com/sirawallet/pay.php"
-   class="w-commerce-commerceaddtocartbutton button"
-   style="display:inline-flex;align-items:center;justify-content:center;text-decoration:none;">
-    Buy Now
-</a>
-</center>
+
+<style>
+.timer-buy-wrapper{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+    width:100%;
+    flex-wrap:nowrap;
+}
+
+.timer{
+    display:flex;
+    gap:6px;
+    align-items:center;
+    flex:1;
+    min-width:0;
+}
+
+.flip-box{
+    text-align:center;
+}
+
+.flip{
+    width:50px;
+    height:58px;
+    background:#111;
+    color:#fff;
+    border-radius:10px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:24px;
+    font-weight:700;
+    position:relative;
+    overflow:hidden;
+    box-shadow:0 6px 15px rgba(0,0,0,.2);
+}
+
+.flip::after{
+    content:"";
+    position:absolute;
+    top:50%;
+    left:0;
+    width:100%;
+    height:1px;
+    background:rgba(255,255,255,.15);
+}
+
+.label{
+    margin-top:5px;
+    font-size:10px;
+    letter-spacing:1px;
+    color:#666;
+}
+
+.flip.animate{
+    animation:flip .4s ease;
+}
+
+@keyframes flip{
+    0%{transform:rotateX(0deg);}
+    50%{transform:rotateX(90deg);}
+    100%{transform:rotateX(0deg);}
+}
+
+.buy-btn{
+    flex-shrink:0;
+    white-space:nowrap;
+    padding:12px 22px;
+    text-decoration:none;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+}
+
+@media(max-width:600px){
+
+.timer-buy-wrapper{
+    gap:8px;
+}
+
+.timer{
+    gap:4px;
+}
+
+.flip{
+    width:40px;
+    height:48px;
+    font-size:20px;
+    border-radius:8px;
+}
+
+.label{
+    font-size:8px;
+}
+
+.buy-btn{
+    padding:10px 16px;
+    font-size:14px;
+}
+
+}
+</style>
+
+<div class="timer-buy-wrapper">
+
+    <div class="timer">
+
+        <div class="flip-box">
+            <div class="flip" id="hours">00</div>
+            <div class="label">Hr</div>
+        </div>
+
+        <div class="flip-box">
+            <div class="flip" id="minutes">00</div>
+            <div class="label">Min</div>
+        </div>
+
+        <div class="flip-box">
+            <div class="flip" id="seconds">00</div>
+            <div class="label">Sec</div>
+        </div>
+
+    </div>
+
+    <a href="https://nirapay.kesug.com/sirawallet/pay.php"
+       class="w-commerce-commerceaddtocartbutton button buy-btn">
+        Buy Now
+    </a>
+
+</div>
+
+<script>
+const h=document.getElementById("hours");
+const m=document.getElementById("minutes");
+const s=document.getElementById("seconds");
+
+let prev={h:"",m:"",s:""};
+
+function flip(el,val,key){
+    if(prev[key]!==val){
+        el.classList.remove("animate");
+        void el.offsetWidth;
+        el.classList.add("animate");
+        el.textContent=val;
+        prev[key]=val;
+    }
+}
+
+function updateTimer(){
+
+    const now=new Date();
+
+    const midnight=new Date(
+        now.getFullYear(),
+        now.getMonth(),
+        now.getDate()+1,
+        0,0,0
+    );
+
+    const diff=midnight-now;
+
+    const hrs=Math.floor(diff/(1000*60*60));
+    const mins=Math.floor((diff%(1000*60*60))/(1000*60));
+    const secs=Math.floor((diff%(1000*60))/1000);
+
+    flip(h,String(hrs).padStart(2,"0"),"h");
+    flip(m,String(mins).padStart(2,"0"),"m");
+    flip(s,String(secs).padStart(2,"0"),"s");
+}
+
+updateTimer();
+setInterval(updateTimer,1000);
+</script>
+	
 <br>
 <style>
 .color-gallery{
