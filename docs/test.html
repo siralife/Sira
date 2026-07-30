@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Secure Checkout</title>
+<style>
+  :root{
+    --navy:#0f1f3d;
+    --navy-soft:#3a4a6b;
+    --line:#e2e5eb;
+    --bg:#f4f6f9;
+    --card:#ffffff;
+    --accent:#c1f377;
+    --accent-text:#233a0e;
+    --error:#d64545;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);
+    color:var(--navy);
+    display:flex;
+    justify-content:center;
+    padding:40px 16px;
+  }
+  .wrap{
+    width:100%;
+    max-width:420px;
+  }
+  .brandbar{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:18px;
+  }
+  .lock-badge{
+    width:28px;height:28px;border-radius:50%;
+    background:var(--navy);
+    display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;
+  }
+  .lock-badge svg{width:14px;height:14px;}
+  .brandbar span{
+    font-size:14px;
+    font-weight:600;
+    letter-spacing:0.2px;
+  }
+  .brandbar small{
+    display:block;
+    font-size:11px;
+    color:var(--navy-soft);
+    font-weight:400;
+  }
+  .card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:26px 24px 22px;
+    box-shadow:0 1px 2px rgba(15,31,61,0.04), 0 8px 24px rgba(15,31,61,0.06);
+  }
+  .amount-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    border-bottom:1px solid var(--line);
+    padding-bottom:16px;
+    margin-bottom:20px;
+  }
+  .amount-row .label{
+    font-size:12px;
+    color:var(--navy-soft);
+    margin-bottom:4px;
+  }
+  .amount-row .value{
+    font-size:26px;
+    font-weight:700;
+    letter-spacing:-0.3px;
+  }
+  .amount-row .merchant{
+    text-align:right;
+    font-size:12px;
+    color:var(--navy-soft);
+  }
+  .amount-row .merchant b{
+    display:block;
+    font-size:13px;
+    color:var(--navy);
+  }
+  form{display:flex;flex-direction:column;gap:14px;}
+  .field{display:flex;flex-direction:column;gap:6px;}
+  .field label{
+    font-size:12.5px;
+    font-weight:600;
+    color:var(--navy-soft);
+  }
+  .field input{
+    height:44px;
+    border:1px solid var(--line);
+    border-radius:9px;
+    padding:0 13px;
+    font-size:14.5px;
+    color:var(--navy);
+    background:#fbfcfd;
+    outline:none;
+    transition:border-color .15s, box-shadow .15s;
+  }
+  .field input::placeholder{color:#a9b0bd;}
+  .field input:focus{
+    border-color:var(--navy-soft);
+    box-shadow:0 0 0 3px rgba(15,31,61,0.08);
+    background:#fff;
+  }
+  .field input.invalid{border-color:var(--error);}
+  .field .err{
+    font-size:11px;
+    color:var(--error);
+    display:none;
+  }
+  .row2{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+  }
+  .pay-btn{
+    margin-top:8px;
+    height:50px;
+    border:none;
+    border-radius:10px;
+    background:var(--accent);
+    color:var(--accent-text);
+    font-size:15.5px;
+    font-weight:700;
+    letter-spacing:0.2px;
+    text-decoration:none;
+    cursor:not-allowed;
+    opacity:0.5;
+    pointer-events:none;
+    transition:opacity .15s, transform .1s;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+  }
+  .pay-btn svg{width:16px;height:16px;}
+  .pay-btn.active{
+    cursor:pointer;
+    opacity:1;
+    pointer-events:auto;
+  }
+  .pay-btn.active:active{transform:scale(0.98);}
+  .secure-note{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    margin-top:14px;
+    font-size:11.5px;
+    color:var(--navy-soft);
+  }
+  .secure-note svg{width:12px;height:12px;flex-shrink:0;}
+  .methods{
+    margin-top:20px;
+    padding-top:16px;
+    border-top:1px solid var(--line);
+  }
+  .methods .m-label{
+    font-size:11px;
+    color:var(--navy-soft);
+    text-align:center;
+    margin-bottom:10px;
+  }
+  .methods-row{
+    display:flex;
+    justify-content:center;
+    gap:8px;
+    flex-wrap:wrap;
+  }
+  .method-chip{
+    height:26px;
+    padding:0 10px;
+    border:1px solid var(--line);
+    border-radius:5px;
+    display:flex;
+    align-items:center;
+    font-size:11px;
+    font-weight:700;
+    color:var(--navy-soft);
+    background:#fafbfc;
+    letter-spacing:0.3px;
+  }
+  .terms{
+    margin-top:16px;
+    font-size:11px;
+    line-height:1.6;
+    color:#9099a8;
+    text-align:center;
+  }
+  .terms a{color:var(--navy-soft);text-decoration:underline;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="brandbar">
+    <div class="lock-badge">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#c1f377" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="4" y="10" width="16" height="10" rx="2"></rect>
+        <path d="M7 10V7a5 5 0 0 1 10 0v3"></path>
+      </svg>
+    </div>
+    <div>
+      <span>Secure Checkout</span>
+      <small>256-bit encrypted payment</small>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="amount-row">
+      <div>
+        <div class="label">Amount payable</div>
+        <div class="value">₹99</div>
+      </div>
+      <div class="merchant">
+        <b>Sira</b>
+        Order #SR10482
+      </div>
+    </div>
+
+    <form id="payForm" novalidate>
+      <div class="field">
+        <label for="name">Customer name</label>
+        <input type="text" id="name" placeholder="Full name as per ID" required>
+        <span class="err">Enter your full name</span>
+      </div>
+
+      <div class="field">
+        <label for="mobile">Mobile number</label>
+        <input type="tel" id="mobile" placeholder="10-digit mobile number" maxlength="10" inputmode="numeric" required>
+        <span class="err">Enter a valid 10-digit number</span>
+      </div>
+
+      <div class="field">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="you@example.com" required>
+        <span class="err">Enter a valid email</span>
+      </div>
+
+      <div class="field">
+        <label for="address">Address line 1</label>
+        <input type="text" id="address" placeholder="House no, street, area" required>
+        <span class="err">Enter your address</span>
+      </div>
+
+      <div class="row2">
+        <div class="field">
+          <label for="city">City</label>
+          <input type="text" id="city" placeholder="City" required>
+          <span class="err">Required</span>
+        </div>
+        <div class="field">
+          <label for="pincode">Pincode</label>
+          <input type="text" id="pincode" placeholder="6-digit pincode" maxlength="6" inputmode="numeric" required>
+          <span class="err">Required</span>
+        </div>
+      </div>
+
+      <a href="#" class="pay-btn" id="payBtn" aria-disabled="true" tabindex="-1">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="4" y="10" width="16" height="10" rx="2"></rect>
+          <path d="M7 10V7a5 5 0 0 1 10 0v3"></path>
+        </svg>
+        Pay ₹99
+      </a>
+    </form>
+
+    <div class="secure-note">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#7d8698" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="4" y="10" width="16" height="10" rx="2"></rect>
+        <path d="M7 10V7a5 5 0 0 1 10 0v3"></path>
+      </svg>
+      Your payment info is encrypted and secure
+    </div>
+
+    <div class="methods">
+      <div class="m-label">Accepted payment methods</div>
+      <div class="methods-row">
+        <div class="method-chip">VISA</div>
+        <div class="method-chip">Mastercard</div>
+        <div class="method-chip">RuPay</div>
+        <div class="method-chip">UPI</div>
+        <div class="method-chip">Net Banking</div>
+      </div>
+    </div>
+
+    <div class="terms">
+      By clicking "Pay now", you agree to our <a href="#">Terms of Service</a> and <a href="#">Refund Policy</a>. Your order details will be shared with our payment partner to process this transaction.
+    </div>
+  </div>
+</div>
+
+<script>
+  const form = document.getElementById('payForm');
+  const btn = document.getElementById('payBtn');
+  const fields = {
+    name: document.getElementById('name'),
+    mobile: document.getElementById('mobile'),
+    email: document.getElementById('email'),
+    address: document.getElementById('address'),
+    city: document.getElementById('city'),
+    pincode: document.getElementById('pincode')
+  };
+
+  function isValidEmail(v){
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+  }
+
+  const UPI_PA = '9561445970@ybl';
+  const UPI_PN = 'Sira';
+  const UPI_AMOUNT = '99';
+
+  function buildUpiLink(){
+    const note = 'Payment for Order';
+    return 'upi://pay?pa=' + UPI_PA +
+      '&pn=' + encodeURIComponent(UPI_PN) +
+      '&am=' + UPI_AMOUNT +
+      '&cu=INR' +
+      '&tn=' + encodeURIComponent(note);
+  }
+
+  function checkForm(){
+    const allFilled =
+      fields.name.value.trim().length > 1 &&
+      /^\d{10}$/.test(fields.mobile.value.trim()) &&
+      isValidEmail(fields.email.value.trim()) &&
+      fields.address.value.trim().length > 3 &&
+      fields.city.value.trim().length > 1 &&
+      /^\d{6}$/.test(fields.pincode.value.trim());
+
+    btn.classList.toggle('active', allFilled);
+    btn.setAttribute('aria-disabled', String(!allFilled));
+    btn.setAttribute('tabindex', allFilled ? '0' : '-1');
+    btn.setAttribute('href', allFilled ? buildUpiLink() : '#');
+  }
+
+  Object.values(fields).forEach(el => {
+    el.addEventListener('input', () => {
+      if(el.id === 'mobile' || el.id === 'pincode'){
+        el.value = el.value.replace(/\D/g,'');
+      }
+      checkForm();
+    });
+  });
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+  });
+</script>
+</body>
+</html>
