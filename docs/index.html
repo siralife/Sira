@@ -684,14 +684,23 @@
 <div class="container">
 <div id="w-node-_0056ad8c-a98c-60aa-9d56-b5e39a48bdbe-91e4b3f4" >
 
+
 <style>
 .insta-slider{
     display:flex;
     gap:15px;
     overflow-x:auto;
+    overflow-y:hidden;
+    white-space:nowrap;
     scroll-behavior:smooth;
-    padding:10px 0;
     -webkit-overflow-scrolling:touch;
+    touch-action:pan-x;
+    cursor:grab;
+    padding:10px 0;
+}
+
+.insta-slider:active{
+    cursor:grabbing;
 }
 
 .insta-slider::-webkit-scrollbar{
@@ -705,6 +714,7 @@
 
 .insta-card{
     flex:0 0 320px;
+    min-width:320px;
 }
 
 .insta-card iframe{
@@ -718,6 +728,7 @@
 @media(max-width:768px){
     .insta-card{
         flex:0 0 280px;
+        min-width:280px;
     }
 
     .insta-card iframe{
@@ -726,7 +737,7 @@
 }
 </style>
 
-<div class="insta-slider">
+<div class="insta-slider" id="instaSlider">
 
 <div class="insta-card">
 <iframe src="https://www.instagram.com/p/DbgQdftqt97/embed/" loading="lazy"></iframe>
@@ -769,6 +780,45 @@
 </div>
 
 </div>
+
+<script>
+const slider = document.getElementById('instaSlider');
+
+let isDown = false;
+let startX;
+let scrollLeft;
+
+slider.addEventListener('mousedown', (e) => {
+    isDown = true;
+    startX = e.pageX - slider.offsetLeft;
+    scrollLeft = slider.scrollLeft;
+});
+
+slider.addEventListener('mouseleave', () => isDown = false);
+slider.addEventListener('mouseup', () => isDown = false);
+
+slider.addEventListener('mousemove', (e) => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - slider.offsetLeft;
+    const walk = (x - startX) * 2;
+    slider.scrollLeft = scrollLeft - walk;
+});
+
+let touchStartX = 0;
+let startScroll = 0;
+
+slider.addEventListener('touchstart', (e) => {
+    touchStartX = e.touches[0].pageX;
+    startScroll = slider.scrollLeft;
+}, {passive:true});
+
+slider.addEventListener('touchmove', (e) => {
+    const x = e.touches[0].pageX;
+    slider.scrollLeft = startScroll - (x - touchStartX);
+}, {passive:true});
+</script>
+
 
 </div>
 </div>
