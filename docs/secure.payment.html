@@ -213,7 +213,7 @@
     <div>
         <span>
   Secure By
-  <img src="img/rplogo.png" style="width:40%; height:auto; vertical-align:middle;">
+  <img src="rplogo.png" style="width:40%; height:auto; vertical-align:middle;">
 </span>
 <!--      <span>Secure Checkout</span>
       <small>256-bit encrypted payment</small>-->
@@ -256,7 +256,7 @@ const countdown = setInterval(() => {
 
     if (timeLeft <= 0) {
         clearInterval(countdown);
-        window.location.href = "https://www.sira.lifestyle/failed.html";
+        window.location.href = "https://www.elnira.in/failed.html";
     }
 
     timeLeft--;
@@ -267,7 +267,7 @@ const countdown = setInterval(() => {
 
   <div class="card">
     <div class="amount-row">
-       <img src="img/logo.png" width="20%" height="auto">
+       <img src="mainlogo.png" width="20%" height="auto">
         <div>
 		
 
@@ -283,7 +283,7 @@ const countdown = setInterval(() => {
 
 <script>
 document.getElementById("orderId").textContent =
-  "Order ID #SL" + Math.floor(10000 + Math.random() * 90000);
+  "Order ID #EN" + Math.floor(10000 + Math.random() * 90000);
 </script>
       </div>
     </div>
@@ -335,7 +335,7 @@ document.getElementById("orderId").textContent =
         </svg>-->
           <center>
                   <span>&nbsp;&nbsp;&nbsp;&nbsp;
-   <img src="img/upilogo.png" style="width:10%; height:auto; vertical-align:middle;">
+   <img src="upilogo.png" style="width:10%; height:auto; vertical-align:middle;">
         Pay ₹150
           </span>
               </center>   
@@ -353,7 +353,7 @@ document.getElementById("orderId").textContent =
     <div class="methods">
       <div class="m-label">Accepted payment methods</div>
 
-        <center><img src="img/payment.png" width="100%" height="auto" ></center>
+        <center><img src="paymentmethods.png" width="100%" height="auto" ></center>
         
        <!-- <div class="methods-row">
         <div class="method-chip">VISA</div>
@@ -366,7 +366,7 @@ document.getElementById("orderId").textContent =
     </div>
 
     <div class="terms">
-      By clicking "Pay Now", you agree to our <a href="termsnconditions.html">Terms of Service</a> and <a href="returnsnrefunds.html">Refund Policy</a>. Your order details will be shared with our payment partner to process this transaction.
+      By clicking "Pay Now", you agree to our <a href="tnc.html">Terms of Service</a> and <a href="rnr.html">Refund Policy</a>. Your order details will be shared with our payment partner to process this transaction.
     </div>
   </div>
 </div>
@@ -437,7 +437,8 @@ document.getElementById("orderId").textContent =
         <path d="M7 10V7a5 5 0 0 1 10 0v3"></path>
       </svg>
     </div>
-    <h3 class="payment-popup-title">Payment Processing</h3>
+      <img src="upiqr.png" width="30%" height="auto">
+    <h3 class="payment-popup-title">Scan To Pay</h3>
     <p class="payment-popup-text">Your payment status is being checked.</p>
       <div class="loader"></div>
 
@@ -537,7 +538,7 @@ document.getElementById("orderId").textContent =
   let countdownInterval = null;
 
   function openPopup() {
-    let timeLeft = 1 * 60; // 3 minutes in seconds
+    let timeLeft = 3 * 60; // 3 minutes in seconds
     overlay.classList.add('active');
     updateTimerDisplay(timeLeft);
 
@@ -547,7 +548,7 @@ document.getElementById("orderId").textContent =
 
       if (timeLeft <= 0) {
         clearInterval(countdownInterval);
-        window.location.href = 'https://www.sira.lifestyle/failed.html';
+        window.location.href = 'https://www.elnira.in/failed.html';
       }
     }, 1000);
   }
@@ -567,7 +568,7 @@ document.getElementById("orderId").textContent =
         function closePopup() {
   overlay.classList.remove('active');
   clearInterval(countdownInterval);
-  window.location.href = 'https://www.sira.lifestyle/failed.html';
+  window.location.href = 'https://www.elnira.in/failed.html';
 }
     
  payBtn.addEventListener('click', function (e) {
@@ -582,7 +583,7 @@ document.getElementById("orderId").textContent =
 // status popup 5 second baad open karo
   setTimeout(() => {
     openPopup();
-  }, 5000);
+  }, 2000);
 });
 
   closeBtn.addEventListener('click', closePopup);
