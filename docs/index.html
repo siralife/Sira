@@ -682,8 +682,10 @@
 </section>
 <section class="section is-large is-grey">
 <div class="container">
+  <center>
+  <div class="badge">Gallery</div>
 
-
+</center>
 <style>
 .insta-slider{
     display:flex;
@@ -815,8 +817,8 @@ slider.addEventListener('touchstart', (e) => {
 slider.addEventListener('touchmove', (e) => {
     const x = e.touches[0].pageX;
     slider.scrollLeft = startScroll - (x - touchStartX);
-}, {passive:true});
-</script>
+}, {passive:true})
+;</script>
 
 
 </div>
@@ -846,127 +848,119 @@ slider.addEventListener('touchmove', (e) => {
 </div>
 </div>
 </section>-->
-<section class="section">
-<div class="container">
-<div id="w-node-_0b4858aa-051f-d7db-52e0-2ae8877c5618-91e4b3f4" class="intro has-12-gap">
-<div class="badge">Testimonials</div>
-<h2 class="heading style-h2">What People Are Saying</h2>
+<style>
+.faq-section{
+    max-width:900px;
+    margin:60px auto;
+    padding:0 20px;
+    font-family:Arial, sans-serif;
+}
+
+.faq-title{
+    text-align:center;
+    font-size:32px;
+    font-weight:700;
+    margin-bottom:30px;
+    color:#c1f377;
+}
+
+.faq-item{
+    border:1px solid #e5e5e5;
+    border-radius:12px;
+    margin-bottom:15px;
+    overflow:hidden;
+    background:#fff;
+}
+
+.faq-item summary{
+    list-style:none;
+    cursor:pointer;
+    padding:18px 22px;
+    font-size:17px;
+    font-weight:600;
+    color:#111;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.faq-item summary::-webkit-details-marker{
+    display:none;
+}
+
+.faq-item summary::after{
+    content:"+";
+    font-size:24px;
+    transition:.3s;
+}
+
+.faq-item[open] summary::after{
+    content:"−";
+}
+
+.faq-content{
+    padding:0 22px 20px;
+    color:#666;
+    line-height:1.7;
+    font-size:15px;
+}
+
+@media(max-width:768px){
+
+.faq-title{
+    font-size:26px;
+}
+
+.faq-item summary{
+    font-size:16px;
+    padding:16px 18px;
+}
+
+.faq-content{
+    font-size:14px;
+}
+}
+</style>
+
+<section class="faq-section">
+
+<h2 class="faq-title">FAQ's</h2>
+
+<details class="faq-item" open>
+<summary>Is this wallet made from genuine leather?</summary>
+<div class="faq-content">
+Yes. Our IT Edition Slim Ladies Wallet is crafted from premium genuine leather, offering durability, a refined finish, and a timeless look that improves with everyday use.
 </div>
+</details>
+
+<details class="faq-item">
+<summary>How long does delivery take?</summary>
+<div class="faq-content">
+Orders are usually dispatched within 24–48 hours. Delivery typically takes 3–7 business days depending on your location across India.
 </div>
-<div class="slider-component">
-<div data-delay="4000" data-animation="slide" class="testimonial-slider w-slider" data-autoplay="false" data-easing="ease" data-hide-arrows="false" data-disable-swipe="false" data-autoplay-limit="0" data-nav-spacing="3" data-duration="500" data-infinite="true">
-<div class="w-slider-mask">
-<div class="w-slide">
-<div class="quote-slide">
-<div id="w-node-_0b4858aa-051f-d7db-52e0-2ae8877c5622-91e4b3f4" class="quote-image">
-<img width="488.5" height="508" alt="" src="68519fc02007af8091e4b3e4/6851a0992f09b6a190d6b286_user-img.webp" loading="lazy" class="cover-image align-top"/>
+</details>
+
+<details class="faq-item">
+<summary>Is my payment secure?</summary>
+<div class="faq-content">
+Absolutely. All payments are processed through secure, encrypted payment gateways, ensuring your personal and payment information remains protected.
 </div>
-<div class="box has-64-gap space-between has-padding">
-<div class="box has-24-gap">
-<div id="w-node-_0b4858aa-051f-d7db-52e0-2ae8877c5626-91e4b3f4" class="flex has-8-gap">
-<div class="vector w-embed">
-<svg width="2.4375em" height="2.1325em" viewBox="0 0 39 37" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M19.6633 0.83667L24.0779 14.4237L38.3641 14.4237L26.8064 22.8209L31.221 36.4079L19.6633 28.0106L8.10549 36.4079L12.5202 22.8209L0.962389 14.4237L15.2486 14.4237L19.6633 0.83667Z" fill="#C1F377"/>
-</svg>
+</details>
+
+<details class="faq-item">
+<summary>What is your return or replacement policy?</summary>
+<div class="faq-content">
+If you receive a damaged or incorrect product, please contact our support team within the eligible period mentioned in our Return Policy. We'll assist you with a replacement or resolution.
 </div>
-<div class="vector w-embed">
-<svg width="2.4375em" height="2.1325em" viewBox="0 0 39 37" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M19.6633 0.83667L24.0779 14.4237L38.3641 14.4237L26.8064 22.8209L31.221 36.4079L19.6633 28.0106L8.10549 36.4079L12.5202 22.8209L0.962389 14.4237L15.2486 14.4237L19.6633 0.83667Z" fill="#C1F377"/>
-</svg>
+</details>
+
+<details class="faq-item">
+<summary>How many cards and cash can the wallet hold?</summary>
+<div class="faq-content">
+The slim design is optimized for daily use and comfortably holds Mobile Phone, multiple cards, folded cash, and other everyday essentials while maintaining a compact profile.
 </div>
-<div class="vector w-embed">
-<svg width="2.4375em" height="2.1325em" viewBox="0 0 39 37" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M19.6633 0.83667L24.0779 14.4237L38.3641 14.4237L26.8064 22.8209L31.221 36.4079L19.6633 28.0106L8.10549 36.4079L12.5202 22.8209L0.962389 14.4237L15.2486 14.4237L19.6633 0.83667Z" fill="#C1F377"/>
-</svg>
-</div>
-<div class="vector w-embed">
-<svg width="2.4375em" height="2.1325em" viewBox="0 0 39 37" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M19.6633 0.83667L24.0779 14.4237L38.3641 14.4237L26.8064 22.8209L31.221 36.4079L19.6633 28.0106L8.10549 36.4079L12.5202 22.8209L0.962389 14.4237L15.2486 14.4237L19.6633 0.83667Z" fill="#C1F377"/>
-</svg>
-</div>
-<div class="vector w-embed">
-<svg width="2.4375em" height="2.1325em" viewBox="0 0 39 37" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M19.6633 0.83667L24.0779 14.4237L38.3641 14.4237L26.8064 22.8209L31.221 36.4079L19.6633 28.0106L8.10549 36.4079L12.5202 22.8209L0.962389 14.4237L15.2486 14.4237L19.6633 0.83667Z" fill="#E4E7EC"/>
-</svg>
-</div>
-</div>
-<p id="w-node-_0b4858aa-051f-d7db-52e0-2ae8877c562c-91e4b3f4" class="heading style-h3">&quot;I Love This Store&quot;</p>
-<p id="w-node-_0b4858aa-051f-d7db-52e0-2ae8877c562e-91e4b3f4" class="large-text is-grey">“Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis nisi ipsum, porttitor ut massa sit amet, pharetra ultricies tortor. Nam hendrerit aliquam nisl, at maximus enim rhoncus ac. Fusce sed leo porttitor, finibus lacus sed, fringilla nunc.”</p>
-</div>
-<div class="divider">
-</div>
-<div class="box has-4-gap">
-<p class="heading style-h4">Brooklyn</p>
-<p id="w-node-_0b4858aa-051f-d7db-52e0-2ae8877c5634-91e4b3f4" class="big-text is-grey">Lorem ipsum dolor sit amet</p>
-</div>
-</div>
-</div>
-</div>
-<div class="w-slide">
-<div class="quote-slide">
-<div id="w-node-_0b4858aa-051f-d7db-52e0-2ae8877c5638-91e4b3f4" class="quote-image">
-<img width="488.5" height="508" alt="" src="68519fc02007af8091e4b3e4/6851a0992f09b6a190d6b286_user-img.webp" loading="lazy" class="cover-image align-top"/>
-</div>
-<div class="box has-64-gap space-between has-padding">
-<div class="box has-24-gap">
-<div id="w-node-_0b4858aa-051f-d7db-52e0-2ae8877c563c-91e4b3f4" class="flex has-8-gap">
-<div class="vector w-embed">
-<svg width="2.4375em" height="2.1325em" viewBox="0 0 39 37" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M19.6633 0.83667L24.0779 14.4237L38.3641 14.4237L26.8064 22.8209L31.221 36.4079L19.6633 28.0106L8.10549 36.4079L12.5202 22.8209L0.962389 14.4237L15.2486 14.4237L19.6633 0.83667Z" fill="#C1F377"/>
-</svg>
-</div>
-<div class="vector w-embed">
-<svg width="2.4375em" height="2.1325em" viewBox="0 0 39 37" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M19.6633 0.83667L24.0779 14.4237L38.3641 14.4237L26.8064 22.8209L31.221 36.4079L19.6633 28.0106L8.10549 36.4079L12.5202 22.8209L0.962389 14.4237L15.2486 14.4237L19.6633 0.83667Z" fill="#C1F377"/>
-</svg>
-</div>
-<div class="vector w-embed">
-<svg width="2.4375em" height="2.1325em" viewBox="0 0 39 37" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M19.6633 0.83667L24.0779 14.4237L38.3641 14.4237L26.8064 22.8209L31.221 36.4079L19.6633 28.0106L8.10549 36.4079L12.5202 22.8209L0.962389 14.4237L15.2486 14.4237L19.6633 0.83667Z" fill="#C1F377"/>
-</svg>
-</div>
-<div class="vector w-embed">
-<svg width="2.4375em" height="2.1325em" viewBox="0 0 39 37" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M19.6633 0.83667L24.0779 14.4237L38.3641 14.4237L26.8064 22.8209L31.221 36.4079L19.6633 28.0106L8.10549 36.4079L12.5202 22.8209L0.962389 14.4237L15.2486 14.4237L19.6633 0.83667Z" fill="#C1F377"/>
-</svg>
-</div>
-<div class="vector w-embed">
-<svg width="2.4375em" height="2.1325em" viewBox="0 0 39 37" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M19.6633 0.83667L24.0779 14.4237L38.3641 14.4237L26.8064 22.8209L31.221 36.4079L19.6633 28.0106L8.10549 36.4079L12.5202 22.8209L0.962389 14.4237L15.2486 14.4237L19.6633 0.83667Z" fill="#C1F377"/>
-</svg>
-</div>
-</div>
-<p id="w-node-_0b4858aa-051f-d7db-52e0-2ae8877c5642-91e4b3f4" class="heading style-h3">&quot;Amazing Products&quot;</p>
-<p id="w-node-_0b4858aa-051f-d7db-52e0-2ae8877c5644-91e4b3f4" class="large-text is-grey">“Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis nisi ipsum, porttitor ut massa sit amet, pharetra ultricies tortor. Nam hendrerit aliquam nisl, at maximus enim rhoncus ac. Fusce sed leo porttitor, finibus lacus sed, fringilla nunc.”</p>
-</div>
-<div class="divider">
-</div>
-<div class="box has-4-gap">
-<p class="heading style-h4">Simmons</p>
-<p id="w-node-_0b4858aa-051f-d7db-52e0-2ae8877c564a-91e4b3f4" class="big-text is-grey">Lorem ipsum dolor sit amet</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="slider-arrow is-previous w-slider-arrow-left">
-<div class="vector w-embed">
-<svg width="0.625em" height="1em" viewBox="0 0 9 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M7.5 1.66309L2.20711 6.95598C1.87377 7.28931 1.70711 7.45598 1.70711 7.66309C1.70711 7.87019 1.87377 8.03686 2.20711 8.37019L7.5 13.6631" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
-</div>
-</div>
-<div class="slider-arrow w-slider-arrow-right">
-<div class="vector w-embed">
-<svg width="0.625em" height="1em" viewBox="0 0 9 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M1.5 1.66309L6.79289 6.95598C7.12623 7.28931 7.29289 7.45598 7.29289 7.66309C7.29289 7.87019 7.12623 8.03686 6.79289 8.37019L1.5 13.6631" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
-</div>
-</div>
-<div class="hidden w-slider-nav w-round">
-</div>
-</div>
-</div>
+</details>
+
 </section>
 <center>
 <img src="img/icons.png" width="90%" height="auto">
