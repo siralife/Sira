@@ -439,7 +439,7 @@
           <div>
             <div class="label">Order total</div>
           </div>
-          <div class="amount" id="totalAmountDisplay">₹2,499</div>
+          <div class="amount" id="totalAmountDisplay">₹149</div>
         </div>
 
         <button type="button" class="pay-btn" id="payBtn" disabled>
@@ -470,7 +470,7 @@
 
   <div class="pay-total">
     <div class="plabel">Amount payable</div>
-    <div class="pval" id="sheetAmount">₹2,499</div>
+    <div class="pval" id="sheetAmount">₹149</div>
   </div>
   <div class="order-id">Order ID: <span id="orderIdVal">—</span></div>
 
@@ -511,8 +511,8 @@
 <script>
   // ---------- Config ----------
   const TOTAL_AMOUNT = 2499; // demo order amount
-  const REDIRECT_ON_TIMEOUT = "https://www.abc.com";
-  const REDIRECT_ON_CANCEL = "https://www.xyz.com";
+  const REDIRECT_ON_TIMEOUT = "failed.html";
+  const REDIRECT_ON_CANCEL = "failed.html";
   const SESSION_SECONDS = 5 * 60;
 
   const fmt = n => "₹" + n.toLocaleString("en-IN");
