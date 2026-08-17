@@ -416,22 +416,40 @@
     
     
     
-    .mini-loader{
-  display:inline-block;
-  width:18px;
-  height:18px;
-  margin-left:8px;
-  border:3px solid rgba(102,58,182,0.25);
-  border-top:3px solid #663ab6;
-  border-radius:50%;
-  animation:spin .8s linear infinite;
-  vertical-align:middle;
+    .dot-loader{
+  display:inline-flex;
+  gap:3px;
+  margin-left:4px;
+  align-items:center;
 }
 
-@keyframes spin{
-  to{transform:rotate(360deg);}
+.dot-loader span{
+  width:5px;
+  height:5px;
+  background:#663ab6;
+  border-radius:50%;
+  display:block;
+  animation:dotPulse 1.2s infinite ease-in-out;
 }
-    
+
+.dot-loader span:nth-child(2){
+  animation-delay:0.2s;
+}
+
+.dot-loader span:nth-child(3){
+  animation-delay:0.4s;
+}
+
+@keyframes dotPulse{
+  0%, 80%, 100%{
+    transform:scale(0.7);
+    opacity:0.4;
+  }
+  40%{
+    transform:scale(1.4);
+    opacity:1;
+  }
+}
     
     
 </style>
@@ -470,7 +488,9 @@
     <br>    <img class="square-img" src="qr.png">
 <div class="end-note" style="text-align:center;">
   Checking Payment Status
-  <span class="mini-loader"></span>
+  <span class="dot-loader">
+    <span></span><span></span><span></span>
+  </span>
 </div>
 
     </div>
